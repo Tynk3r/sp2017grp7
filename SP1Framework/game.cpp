@@ -1,4 +1,4 @@
-// This is the main file for the game logic and function
+﻿// This is the main file for the game logic and function
 //
 //test
 #include "game.h"
@@ -6,6 +6,8 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <mmsystem.h>
+#pragma comment(lib, "Winmm.lib")
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -24,7 +26,7 @@ double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger k
 // Console object
 Console g_Console(80, 25, "SP1 Framework");
 
-
+ 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
 //            Initialize variables, allocate memory, load data from file, etc. 
@@ -34,6 +36,7 @@ Console g_Console(80, 25, "SP1 Framework");
 //--------------------------------------------------------------
 void init( void )
 {
+	
     // Set precision for floating point output
     g_dElapsedTime = 0.0;
     g_dBounceTime = 0.0;
@@ -197,33 +200,49 @@ void LevelScreenSelect() // LOGIC FOR KEY PRESS in level select
 		return;
 	if (g_abKeyPressed[K_ONE])
 	{
-		g_eGameState = S_GAME;
-		g_currentlevel = L_LEVELONE;
-		bSomethingHappened = true;
-	}
+	   
+	    g_eGameState = S_GAME;
+	    g_currentlevel = L_LEVELONE;
+        bSomethingHappened = true;
+		PlaySound(TEXT("levels1-3.wav"), NULL, SND_ASYNC | SND_LOOP);
+		system("0");
+ }
+
+
 	if (g_abKeyPressed[K_TWO])
 	{
+
 		g_eGameState = S_GAME;
 		g_currentlevel = L_LEVELTWO;
 		bSomethingHappened = true;
+		PlaySound(TEXT("levels1-3.wav"), NULL, SND_ASYNC | SND_LOOP);
+		system("0");
 	}
 	if (g_abKeyPressed[K_THREE])
 	{
 		g_eGameState = S_GAME;
 		g_currentlevel = L_LEVELTHREE;
 		bSomethingHappened = true;
+		PlaySound(TEXT("levels1-3.wav"), NULL, SND_ASYNC | SND_LOOP);
+		system("0");
 	}
 	if (g_abKeyPressed[K_FOUR])
 	{
 		g_eGameState = S_GAME;
 		g_currentlevel = L_LEVELFOUR;
 		bSomethingHappened = true;
+		PlaySound(TEXT("levels4-5.wav"), NULL, SND_ASYNC | SND_LOOP);
+		system("0");
 	}
+	
 	if (g_abKeyPressed[K_FIVE])
 	{
+	
 		g_eGameState = S_GAME;
 		g_currentlevel = L_LEVELFIVE;
 		bSomethingHappened = true;
+		PlaySound(TEXT("levels4-5.wav"), NULL, SND_ASYNC | SND_LOOP);
+		system("0");
 	}
 	if (g_abKeyPressed[K_ESCAPE])
 	{
@@ -235,6 +254,7 @@ void LevelScreenSelect() // LOGIC FOR KEY PRESS in level select
 		// set the bounce time to some time in the future to prevent accidental triggers
 		g_dBounceTime = g_dElapsedTime + 0.25;
 	}
+	
 }
 
 void charactercolourselect() {
@@ -277,6 +297,7 @@ void charactercolourselect() {
 		// set the bounce time to some time in the future to prevent accidental triggers
 		g_dBounceTime = g_dElapsedTime + 0.25;
 	}
+
 }
 
 void gameplay()            // gameplay logic
@@ -364,9 +385,12 @@ void clearScreen()
     g_Console.clearBuffer(0x0F);
 }
 
+
 void renderSplashScreen()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
+	PlaySound(TEXT("mainmenu.wav"), NULL, SND_ASYNC | SND_LOOP);
+	system("pause>nul");
     c.Y /= 2;
     c.X = c.X / 2 - 8;
     g_Console.writeToBuffer(c, "1. Level Select", 0x06);
@@ -391,6 +415,7 @@ void renderSplashScreen()  // renders the splash screen
 	g_Console.writeToBuffer(c, "|   |   ||     ||  |  ||     ||     ||     ||     ||     ||     |", 0x02);
 	c.Y += 1;
 	g_Console.writeToBuffer(c, "|___|___| \\___/ |__|__| \\__,_||_____||_____||_____||_____||_____|", 0x02);
+
 }
 
 
@@ -503,9 +528,10 @@ void monsterLOC()
 
 void monsterONE()
 {
-	g_Console.writeToBuffer(monONE, "M", 0x0C);
-}
+	g_Console.writeToBuffer(monONE, "_(^q^_)", 0x0C);
+	
 
+}
 
 void monsterAI()
 {
